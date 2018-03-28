@@ -58,13 +58,13 @@ def on_epoch_end(epoch, logs):
         print('----- diversity:', diversity)
 
         generated = ''
-        sentence = text[start_index: start_index + maxlen]
+        sentence = words[start_index: start_index + maxlen]
         generated += sentence
         print('----- Generating with seed: "' + sentence + '"')
         sys.stdout.write(generated)
 
-        for i in range(400):
-            x_pred = np.zeros((1, maxlen, len(chars)))
+        for i in range(20):
+            x_pred = np.zeros((1, maxlen, len(words)))
             for t, word in enumerate(sentence):
                 x_pred[0, t, ind_wd[word]] = 1.
 
@@ -97,8 +97,6 @@ for i, sentence in enumerate(sentences):
     for t, word in enumerate(sentence):
         x[i, t, wd_ind[word]] = 1
     y[i, wd_ind[next_word[i]]] = 1
-
-
 
 
 print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
